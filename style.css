@@ -3,75 +3,77 @@ body {
     /* Используем фон из темы Telegram */
     background: var(--tg-theme-bg-color, #f7f5f2); 
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-    color: var(--tg-theme-text-color, #000000); /* Используем цвет текста из темы Telegram */
+    color: var(--tg-theme-text-color, #000000); 
     min-height: 100vh;
 }
 .container {
     padding: 15px;
 }
 
-/* Стили для секций, чтобы они выглядели как карточки Telegram */
-.section {
-    padding: 15px;
-    margin-bottom: 20px;
-    /* Используем вторичный фон Telegram */
-    background-color: var(--tg-theme-secondary-bg-color, #ffffff); 
-    border-radius: 10px;
-}
-
 .header h1 {
-    font-size: 24px;
+    font-size: 22px;
     text-align: center;
     margin-bottom: 5px;
+    color: var(--tg-theme-link-color);
 }
-
 .header p {
     text-align: center;
-    color: var(--tg-theme-hint-color, #888888); /* Цвет для вспомогательного текста */
+    color: var(--tg-theme-hint-color);
     margin-bottom: 20px;
 }
 
-.section h2 {
-    font-size: 18px;
-    margin-top: 0;
-    padding-bottom: 5px;
-    color: var(--tg-theme-link-color, #2481cc); /* Цвет для заголовков */
+/* Карточка работы */
+.work-item {
+    margin-bottom: 25px;
+    padding: 0;
+    border-radius: 10px;
+    overflow: hidden;
+    /* Используем вторичный фон, если нужно подложка */
+    /* background-color: var(--tg-theme-secondary-bg-color, #ffffff); */
 }
 
-/* Стили для списка навыков */
-.section ul {
-    list-style: none;
-    padding-left: 0;
-}
-.section ul li {
-    padding: 5px 0;
-    border-bottom: 1px dashed var(--tg-theme-hint-color, #eeeeee);
-}
-.section ul li:last-child {
-    border-bottom: none;
-}
-
-/* Стили для кнопки, адаптированные под TMA */
-button {
-    padding: 14px 20px;
+/* Изображение работы */
+.work-image {
     width: 100%;
+    height: auto;
+    display: block;
+    margin-bottom: 10px;
+    border-radius: 8px; /* Немного скруглим углы */
+}
+
+/* Кнопка-ссылка */
+.work-btn {
+    display: block;
+    text-decoration: none;
+    text-align: center;
+    padding: 14px 20px;
+    width: calc(100% - 40px); /* Учитываем padding */
     font-size: 16px;
-    border: none;
     border-radius: 8px;
-    /* Используем цвета кнопок из темы Telegram */
+    /* Используем цвета кнопок Telegram */
     background: var(--tg-theme-button-color, #3b82f6);
     color: var(--tg-theme-button-text-color, white);
-    cursor: pointer;
     font-weight: bold;
-    margin-top: 10px;
+}
+
+/* Стили для кнопки, если нет ссылки (заглушка) */
+.work-btn.disabled {
+    opacity: 0.6;
+    cursor: default;
+}
+
+/* Блок описания (как в вашем примере с бонусной программой) */
+.description-block {
+    padding: 10px 15px;
+    margin-bottom: 10px;
+    color: var(--tg-theme-text-color);
+    background-color: var(--tg-theme-secondary-bg-color, #f0f0f0);
+    border-radius: 8px;
 }
 
 .footer {
     text-align: center;
     margin-top: 30px;
-}
-
-.footer p, .footer a {
     font-size: 14px;
-    color: var(--tg-theme-hint-color, #888888);
+    color: var(--tg-theme-hint-color);
 }
