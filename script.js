@@ -1,20 +1,37 @@
 const tg = window.Telegram.WebApp;
-const welcomeText = document.getElementById("welcomeText");
-
-// 1. Инициализация TMA
 tg.ready();
 tg.expand();
 
-// 2. Персонализация (необязательно, но приятно)
-if (tg.initDataUnsafe.user) {
-    const userName = tg.initDataUnsafe.user.first_name || "Там";
-    welcomeText.textContent = `Привет, ${userName}! Здесь мои работы и контакты.`;
-}
+// 1. Устанавливаем Главную кнопку Telegram для закрытия
+tg.MainButton.setText('Закрыть Mini App').show();
+tg.MainButton.onClick(() => tg.close());
 
-// 3. Устанавливаем Главную кнопку (MainButton) Telegram
-tg.MainButton.setText('Закрыть Mini App')
-tg.MainButton.show();
+// 2. Слушаем все кнопки с работами
+const workButtons = document.querySelectorAll('.work-btn');
 
-tg.MainButton.onClick(() => {
-    tg.close();
+workButtons.forEach(button => {
+    button.onclick = (e) => {
+        // Получаем команду из атрибута data-command
+        const command = button.getAttribute('data-command');
+        // Получаем URL из атрибута data-url
+        const url = button.getAttribute('data-url');
+        
+        // Шаг 1: Отправляем команду в LeadTeh
+        if (command) {
+            tg.sendData(command);
+            // Опционально: показываем, что команда отправлена
+            tg.showAlert(`Команда отправлена: ${command}`); 
+        }
+        
+        // Шаг 2: Открываем ссылку
+        if (url) {
+            // Используем openLink для открытия ссылки в браузере или Telegram
+            tg.openLink(url); 
+        } 
+        
+        // Шаг 3: Закрываем Mini App
+        tg.close();
+        
+        e.preventDefault(); 
+    };
 });
