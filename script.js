@@ -1,5 +1,5 @@
 const tg = window.Telegram.WebApp;
-// 🚨 ВСТАВЬТЕ СЮДА ВАШ УНИКАЛЬНЫЙ WEBHOOK URL ИЗ LEADTEH
+// ВАШ WEBHOOK URL ИЗ LEADTEH
 const WEBHOOK_URL = 'https://rb229169.leadteh.ru/inner_webhook/8d3ed841-0230-40a6-b7bc-2edd55cc451b'; 
 
 tg.ready();
@@ -16,25 +16,26 @@ function sendWebhookData(command) {
     const userId = tg.initDataUnsafe.user ? tg.initDataUnsafe.user.id : null;
 
     if (!userId) {
-        // Если ID пользователя недоступен, не отправляем Webhook
         console.error('User ID not available, cannot send Webhook.');
         return; 
     }
 
-    // Создаем объект данных для отправки
+    // 🚨 НОВЫЙ PAYLOAD, соответствующий требованиям LeadTeh
     const payload = {
-        // Ключевая переменная, которую вы будете ловить в LeadTeh
-        command_key: command,
-        // ОЧЕНЬ ВАЖНО: передаем Telegram User ID для идентификации в LeadTeh
-        user_id: userId,
-        // Дополнительно можно передать имя пользователя для логов
-        username: tg.initDataUnsafe.user.username || 'N/A' 
+        // 1. Критерий поиска: ищем по Telegram ID
+        "contact_by": "telegram_id",
+        // 2. Искомое значение: ID текущего пользователя
+        "search": String(userId), // Передаем ID как строку, как требует LeadTeh
+        // 3. Переменные, которые нужно назначить (сюда кладем нашу команду)
+        "variables": {
+            // Переменная, которую LeadTeh сохранит для дальнейшей обработки
+            "MiniApp_Command": command 
+        }
     };
 
     fetch(WEBHOOK_URL, {
         method: 'POST',
         headers: {
-            // Указываем, что отправляем JSON
             'Content-Type': 'application/json',
         },
         body: JSON.stringify(payload)
@@ -59,11 +60,9 @@ workButtons.forEach(button => {
         const url = button.getAttribute('data-url');
         
         if (command) {
-            // 🚨 НОВАЯ ЛОГИКА: Отправляем команду через Webhook
             sendWebhookData(command);
-         }
+        }
         
-        // Открываем ссылку (если она есть)
         if (url) {
             tg.openLink(url); 
         } 
@@ -71,7 +70,7 @@ workButtons.forEach(button => {
         // Закрываем Mini App
         setTimeout(() => {
             tg.close();
-        }, 500); // Даем время на отправку Webhook
+        }, 500); 
         
         e.preventDefault(); 
     };
