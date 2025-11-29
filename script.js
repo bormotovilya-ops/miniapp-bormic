@@ -2,15 +2,15 @@ const tg = window.Telegram.WebApp;
 tg.ready();
 tg.expand();
 
-// 🚨 ВАШ WebHook URL ИЗ LEADTEH (ЛУЧШЕ СТАНДАРТНЫЙ WEBHOOK)
-const WEBHOOK_BASE_URL = 'https://rb229169.leadteh.ru/inner_webhook/js/19846c85-8252-419d-942c-7e4dc8151977'; 
+// 🚨 ВАШ URL СТАНДАРТНОГО ВХОДЯЩЕГО WEBHOOK ИЗ LEADTEH
+const WEBHOOK_BASE_URL = 'https://rb229169.leadteh.ru/inner_webhook/8d3ed841-0230-40a6-b7bc-2edd55cc451b'; 
 
 // 1. Устанавливаем Главную кнопку Telegram для закрытия
 tg.MainButton.setText('Закрыть Mini App').show();
 tg.MainButton.onClick(() => tg.close());
 
 
-// Функция для отправки данных через GET-параметры
+// Функция для отправки данных через GET-параметры (tg.openLink)
 function sendGetRequest(command) {
     const userId = tg.initDataUnsafe.user ? tg.initDataUnsafe.user.id : null;
 
@@ -23,10 +23,8 @@ function sendGetRequest(command) {
     // ?contact_by=telegram_id&search=123456&command=MiniApp_vizitka_view
     const finalUrl = `${WEBHOOK_BASE_URL}?contact_by=telegram_id&search=${userId}&command=${command}`;
 
-    // Открываем URL в фоне. Это и есть наш GET-запрос.
+    // Открываем URL в фоне. Это наш GET-запрос.
     tg.openLink(finalUrl); 
-    
-    // Внимание: Mini App закроется сразу после этого действия, так как нет задержки
 }
 
 
