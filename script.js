@@ -1,49 +1,54 @@
 const tg = window.Telegram.WebApp;
-const WEBHOOK_URL = 'https://rb229169.leadteh.ru/inner_webhook/8d3ed841-0230-40a6-b7bc-2edd55cc451b'; // 🚨 ВАШ URL СТАНДАРТНОГО WEBHOOK
-
 tg.ready();
 tg.expand();
+
+// 🚨 ВАШ URL СТАНДАРТНОГО ВХОДЯЩЕГО WEBHOOK ИЗ LEADTEH
+const WEBHOOK_BASE_URL = 'https://rb229169.leadteh.ru/inner_webhook/8d3ed841-0230-40a6-b7bc-2edd55cc451b'; 
+
+// 1. Устанавливаем Главную кнопку Telegram для закрытия
 tg.MainButton.setText('Закрыть Mini App').show();
 tg.MainButton.onClick(() => tg.close());
 
-// Функция для отправки данных через POST (в фоне)
-function sendWebhookData(command) {
+
+// Функция для отправки данных через GET-параметры (tg.openLink)
+function sendGetRequest(command) {
     const userId = tg.initDataUnsafe.user ? tg.initDataUnsafe.user.id : null;
-    if (!userId) { return; }
 
-    // Payload для Стандартного Webhook (используем имена, нужные LeadTeh для поиска)
-    const payload = {
-        contact_by: "telegram_id",
-        search: String(userId),
-        command: command // Наша команда, которую LeadTeh должен сохранить
-    };
+    if (!userId) {
+        console.error('User ID not available.');
+        return; 
+    }
 
-    fetch(WEBHOOK_URL, {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(payload)
-    }).catch(error => {
-        console.error('Ошибка сети:', error);
-    });
+    // Собираем полный URL с параметрами:
+    // ?contact_by=telegram_id&search=123456&command=MiniApp_vizitka_view
+    const finalUrl = `${WEBHOOK_BASE_URL}?contact_by=telegram_id&search=${userId}&command=${command}`;
+
+    // Открываем URL в фоне. Это наш GET-запрос.
+    tg.openLink(finalUrl); 
 }
 
-// Слушаем кнопки
-document.querySelectorAll('.work-btn').forEach(button => {
+
+// 2. Слушаем все кнопки с работами
+const workButtons = document.querySelectorAll('.work-btn');
+
+workButtons.forEach(button => {
     button.onclick = (e) => {
         const command = button.getAttribute('data-command');
         const url = button.getAttribute('data-url');
         
+        // Отправляем команду
         if (command) {
-            sendWebhookData(command); // Отправка в фоне
+            sendGetRequest(command);
         }
+        
+        // Открываем ссылку (если она есть)
         if (url) {
             tg.openLink(url); 
         } 
         
-        // Закрываем Mini App
-        setTimeout(() => tg.close(), 500); 
+        // Сразу закрываем Mini App.
+        tg.close(); 
+        
         e.preventDefault(); 
     };
 });
