@@ -2,57 +2,40 @@ const tg = window.Telegram.WebApp;
 tg.ready();
 tg.expand();
 
-// 🚨 URL вашего Стандартного входящего webhook Leadteh
-const WEBHOOK_BASE_URL = 'https://rb229169.leadteh.ru/inner_webhook/22515d19-26f2-4eee-9a09-a5bfe9d4ffc9';
-
-// Главная кнопка
-tg.MainButton.setText('Закрыть Mini App').show();
+tg.MainButton.setText('Закрыть').show();
 tg.MainButton.onClick(() => tg.close());
 
+const WEBHOOK_BASE_URL = 'https://rb229169.leadteh.ru/inner_webhook/22515d19-26f2-4eee-9a09-a5bfe9d4ffc9';
 
-// ---------------------------------------------------------
-// 🔥 ТИХИЙ GET-ЗАПРОС В LEADTEH (без открытия JSON-страницы)
-// ---------------------------------------------------------
-async function sendGetRequest(command) {
-    const userId = tg.initDataUnsafe.user?.id;
+// 🔹 1. Передаём команду ВНУТРЬ Leadteh
+function sendCommandToLeadteh(cmd) {
+    tg.sendData(JSON.stringify({ command: cmd }));
+}
 
-    if (!userId) {
-        console.error('User ID not available.');
-        return;
-    }
-
-    const finalUrl = `${WEBHOOK_BASE_URL}?contact_by=telegram_id&search=${userId}&command=${command}`;
+// 🔹 2. Тихий вызов вебхука Leadteh (URL — здесь)
+async function silentWebhookCall(cmd, userId) {
+    const finalUrl = `${WEBHOOK_BASE_URL}?contact_by=telegram_id&search=${userId}&command=${cmd}`;
 
     try {
-        const response = await fetch(finalUrl, {
-            method: 'GET',
-            mode: 'no-cors'
-        });
-        // no-cors → Mini App не видит ответ, но Leadteh получает запрос
-    } catch (err) {
-        console.error('Webhook error:', err);
+        await fetch(finalUrl, { method: "GET", mode: "no-cors" });
+    } catch (e) {
+        console.error(e);
     }
 }
 
-
-// ---------------------------------------------------------
-// 🎬 Обработка кнопок в Mini App
-// ---------------------------------------------------------
 const workButtons = document.querySelectorAll('.work-btn');
 
-workButtons.forEach(button => {
-    button.onclick = async (e) => {
-        e.preventDefault();
+workButtons.forEach(btn => {
+    btn.onclick = async () => {
+        const cmd = btn.dataset.command;
+        const url = btn.dataset.url;
+        const userId = tg.initDataUnsafe.user?.id;
 
-        const command = button.getAttribute('data-command');
-        const url = button.getAttribute('data-url');
-
-        // Отправляем скрытый запрос в Leadteh
-        if (command) {
-            await sendGetRequest(command);
+        if (cmd) {
+            sendCommandToLeadteh(cmd);       // передаём command → попадёт в INPUT
+            silentWebhookCall(cmd, userId);  // вызываем URL Leadteh тихо
         }
 
-        // Открываем внешний URL (если есть)
         if (url) {
             tg.openLink(url);
         }
