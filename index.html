@@ -3,39 +3,59 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Bormic | Проекты</title>
+<title>Bormic | Мои Работы</title>
 <link rel="stylesheet" href="style.css">
 <script src="https://telegram.org/js/telegram-web-app.js"></script>
 </head>
 <body>
 <div class="container">
-
     <div class="header">
-        <h1 id="welcomeTitle">Привет, Пользователь!</h1>
-        <p>Bormic — проекты и решения Ильи Бормотова (LeadTeh и Mini Apps).</p>
+        <h1>Мои Свежие Работы</h1>
+        <p id="welcomeText">
+            Здесь вы найдете перечень разработанных мною чат-ботов и проектов.
+        </p>
     </div>
 
-    <section class="section">
-        <h2>🧑‍💻 Обо мне и моем опыте</h2>
-        <p>
-            Я, Илья Бормотов, готов предложить свои услуги в сфере чат-ботов и интеграции.
-            Опыт разработки и настройки автоматизаций на платформе LeadTeh.
-        </p>
-        <button id="serviceBtn">Обсудить ваш проект</button>
+    <section class="work-item">
+        <img src="https://miniapp-bormic.vercel.app/images/vizitka.jpeg" alt="Визитка" class="work-image">
+        <a href="https://t.me/VisitCardIlyaBormotov_Bot" target="_blank" rel="nofollow" class="btn work-btn">
+            <span>Телеграм-бот с моей визиткой</span>
+        </a>
     </section>
 
-    <section class="section">
-        <h2>🛠 Мои навыки и инструменты</h2>
-        <ul>
-            <li>✅ **LeadTeh**: Полная настройка воронки и логики.</li>
-            <li>✅ **Telegram Mini Apps**: Разработка с использованием JavaScript/React.</li>
-            <li>✅ **API/Интеграции**: Связка LeadTeh с внешними системами.</li>
-            <li>✅ **HTML/CSS/JS**: Чистый код и адаптивный дизайн.</li>
-        </ul>
+    <section class="work-item">
+        <img src="https://miniapp-bormic.vercel.app/images/concert.jpeg" alt="Концерт" class="work-image">
+        <a href="https://t.me/kidcodes_music_bot" target="_blank" rel="nofollow" class="btn work-btn">
+            <span>Бот записи на концерт</span>
+        </a>
+    </section>
+    
+    <section class="work-item">
+        <img src="https://miniapp-bormic.vercel.app/images/meditasiya.jpeg" alt="Медитации" class="work-image">
+        <a href="https://t.me/meditasiya_bot" target="_blank" rel="nofollow" class="btn work-btn">
+            <span>Бот по медитациям</span>
+        </a>
     </section>
 
+    <section class="work-item">
+        <img src="https://miniapp-bormic.vercel.app/images/vocal.jpeg" alt="Вокал" class="work-image">
+        <a href="https://t.me/VocallessonsLaika_Bot" target="_blank" rel="nofollow" class="btn work-btn">
+            <span>Бот с уроками вокала</span>
+        </a>
+    </section>
+    
+    <div class="description-block">
+        <p>В боте реализована бонусная программа для клиентов магазина Окружение</p>
+    </div>
+    <section class="work-item">
+        <img src="https://miniapp-bormic.vercel.app/images/bonus.jpeg" alt="Бонусы" class="work-image">
+        <a href="#" target="_blank" rel="nofollow" class="btn work-btn disabled">
+            <span>Бот с бонусной программой</span>
+        </a>
+    </section>
+    
     <div class="footer">
-        <p>Спасибо за интерес! Всегда на связи.</p>
+        <p>Сделано на LeadTeh.</p>
         <a id="telegramLink" href="tg://resolve?domain=IlyaBorm" target="_blank">Мой Telegram: @IlyaBorm</a>
     </div>
 </div>
