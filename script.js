@@ -2,53 +2,61 @@ const tg = window.Telegram.WebApp;
 tg.ready();
 tg.expand();
 
-// 🚨 ВАШ URL СТАНДАРТНОГО ВХОДЯЩЕГО WEBHOOK ИЗ LEADTEH
-const WEBHOOK_BASE_URL = 'https://rb229169.leadteh.ru/inner_webhook/22515d19-26f2-4eee-9a09-a5bfe9d4ffc9'; 
+// 🚨 URL вашего Стандартного входящего webhook Leadteh
+const WEBHOOK_BASE_URL = 'https://rb229169.leadteh.ru/inner_webhook/22515d19-26f2-4eee-9a09-a5bfe9d4ffc9';
 
-// 1. Устанавливаем Главную кнопку Telegram для закрытия
+// Главная кнопка
 tg.MainButton.setText('Закрыть Mini App').show();
 tg.MainButton.onClick(() => tg.close());
 
 
-// Функция для отправки данных через GET-параметры (tg.openLink)
-function sendGetRequest(command) {
-    const userId = tg.initDataUnsafe.user ? tg.initDataUnsafe.user.id : null;
+// ---------------------------------------------------------
+// 🔥 ТИХИЙ GET-ЗАПРОС В LEADTEH (без открытия JSON-страницы)
+// ---------------------------------------------------------
+async function sendGetRequest(command) {
+    const userId = tg.initDataUnsafe.user?.id;
 
     if (!userId) {
         console.error('User ID not available.');
-        return; 
+        return;
     }
 
-    // Собираем полный URL с параметрами:
-    // ?contact_by=telegram_id&search=123456&command=MiniApp_vizitka_view
     const finalUrl = `${WEBHOOK_BASE_URL}?contact_by=telegram_id&search=${userId}&command=${command}`;
 
-    // Открываем URL в фоне. Это наш GET-запрос.
-    tg.openLink(finalUrl); 
+    try {
+        const response = await fetch(finalUrl, {
+            method: 'GET',
+            mode: 'no-cors'
+        });
+        // no-cors → Mini App не видит ответ, но Leadteh получает запрос
+    } catch (err) {
+        console.error('Webhook error:', err);
+    }
 }
 
 
-// 2. Слушаем все кнопки с работами
+// ---------------------------------------------------------
+// 🎬 Обработка кнопок в Mini App
+// ---------------------------------------------------------
 const workButtons = document.querySelectorAll('.work-btn');
 
 workButtons.forEach(button => {
-    button.onclick = (e) => {
+    button.onclick = async (e) => {
+        e.preventDefault();
+
         const command = button.getAttribute('data-command');
         const url = button.getAttribute('data-url');
-        
-        // Отправляем команду
+
+        // Отправляем скрытый запрос в Leadteh
         if (command) {
-            sendGetRequest(command);
+            await sendGetRequest(command);
         }
-        
-        // Открываем ссылку (если она есть)
+
+        // Открываем внешний URL (если есть)
         if (url) {
-            tg.openLink(url); 
-        } 
-        
-        // Сразу закрываем Mini App.
-        tg.close(); 
-        
-        e.preventDefault(); 
+            tg.openLink(url);
+        }
+
+        tg.close();
     };
 });
