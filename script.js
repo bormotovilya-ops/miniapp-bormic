@@ -3,7 +3,10 @@ tg.ready();
 tg.expand();
 
 // 🚨 ВСТАВЬТЕ СЮДА URL вашего JavaScript Webhook из LeadTeh!
-const WEBHOOK_URL = 'https://rb229169.leadteh.ru/inner_webhook/js/19846c85-8252-419d-942c-7e4dc8151977'; 
+//const WEBHOOK_URL = 'https://rb229169.leadteh.ru/inner_webhook/js/19846c85-8252-419d-942c-7e4dc8151977'; 
+const WEBHOOK_URL = 'https://webhook.site/99d5641f-d42b-4936-9bcc-7c0cfc088930'; 
+
+
 
 // 1. Устанавливаем Главную кнопку Telegram для закрытия
 tg.MainButton.setText('Закрыть Mini App').show();
