@@ -1,40 +1,20 @@
 const tg = window.Telegram.WebApp;
-const welcomeTitle = document.getElementById("welcomeTitle");
-const serviceBtn = document.getElementById("serviceBtn");
+const welcomeText = document.getElementById("welcomeText");
 
-// 1. Увеличиваем размер Mini App
+// 1. Инициализация TMA
 tg.ready();
 tg.expand();
 
-// 2. Персонализация приветствия
+// 2. Персонализация (необязательно, но приятно)
 if (tg.initDataUnsafe.user) {
     const userName = tg.initDataUnsafe.user.first_name || "Там";
-    welcomeTitle.textContent = `Привет, ${userName}!`;
-} else {
-    welcomeTitle.textContent = "Привет!";
+    welcomeText.textContent = `Привет, ${userName}! Здесь мои работы и контакты.`;
 }
 
-// 3. Устанавливаем Главную кнопку (MainButton)
+// 3. Устанавливаем Главную кнопку (MainButton) Telegram
 tg.MainButton.setText('Закрыть Mini App')
 tg.MainButton.show();
 
-// Обработчик нажатия Главной кнопки (закрытие Mini App)
 tg.MainButton.onClick(() => {
-    // Вы можете отправить какие-то данные перед закрытием, если нужно
-    // tg.sendData("app_closed");
     tg.close();
 });
-
-// 4. Логика для кнопки "Обсудить ваш проект"
-serviceBtn.onclick = () => {
-    // Ваша логика: отправляем данные в бота (например, для запуска воронки LeadTeh)
-    tg.sendData("discuss_project_clicked");
-    
-    // Опционально: можно показать уведомление
-    tg.showAlert("Запрос отправлен! Бот свяжется с вами.");
-    
-    // Закрываем Mini App через 2 секунды
-    setTimeout(() => {
-        tg.close();
-    }, 2000);
-};
