@@ -2,50 +2,35 @@ const tg = window.Telegram.WebApp;
 tg.ready();
 tg.expand();
 
-// 🚨 ВСТАВЬТЕ СЮДА URL вашего JavaScript Webhook из LeadTeh!
-//const WEBHOOK_URL = 'https://rb229169.leadteh.ru/inner_webhook/js/19846c85-8252-419d-942c-7e4dc8151977'; 
-const WEBHOOK_URL = 'https://webhook.site/99d5641f-d42b-4936-9bcc-7c0cfc088930'; 
-
-
+// 🚨 ВАШ WebHook URL ИЗ LEADTEH (ЛУЧШЕ СТАНДАРТНЫЙ WEBHOOK)
+const WEBHOOK_BASE_URL = 'https://rb229169.leadteh.ru/inner_webhook/8d3ed841-0230-40a6-b7bc-2edd55cc451b'; 
 
 // 1. Устанавливаем Главную кнопку Telegram для закрытия
 tg.MainButton.setText('Закрыть Mini App').show();
 tg.MainButton.onClick(() => tg.close());
 
 
-// Функция для отправки данных через Webhook
-function sendWebhookData(command) {
+// Функция для отправки данных через GET-параметры
+function sendGetRequest(command) {
     const userId = tg.initDataUnsafe.user ? tg.initDataUnsafe.user.id : null;
 
     if (!userId) {
-        console.error('User ID not available, cannot send Webhook.');
+        console.error('User ID not available.');
         return; 
     }
-    
-    // Структура Payload, требуемая для поиска контакта и назначения переменной
-    const payload = {
-        "contact_by": "telegram_id",
-        "search": String(userId), 
-        "variables": {
-            // Переменная, которую LeadTeh сохранит
-            "MiniApp_Command_Final": command 
-        }
-    };
 
-    fetch(WEBHOOK_URL, {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(payload)
-    })
-    .catch(error => {
-        console.error('Ошибка сети:', error);
-    });
+    // Собираем полный URL с параметрами:
+    // ?contact_by=telegram_id&search=123456&command=MiniApp_vizitka_view
+    const finalUrl = `${WEBHOOK_BASE_URL}?contact_by=telegram_id&search=${userId}&command=${command}`;
+
+    // Открываем URL в фоне. Это и есть наш GET-запрос.
+    tg.openLink(finalUrl); 
+    
+    // Внимание: Mini App закроется сразу после этого действия, так как нет задержки
 }
 
 
-// 2. Слушаем все кнопки с работами (с атрибутами data-command)
+// 2. Слушаем все кнопки с работами
 const workButtons = document.querySelectorAll('.work-btn');
 
 workButtons.forEach(button => {
@@ -53,9 +38,9 @@ workButtons.forEach(button => {
         const command = button.getAttribute('data-command');
         const url = button.getAttribute('data-url');
         
-        // Отправляем команду, соответствующую нажатой кнопке
+        // Отправляем команду
         if (command) {
-            sendWebhookData(command);
+            sendGetRequest(command);
         }
         
         // Открываем ссылку (если она есть)
@@ -63,10 +48,8 @@ workButtons.forEach(button => {
             tg.openLink(url); 
         } 
         
-        // Закрываем Mini App
-        setTimeout(() => {
-            tg.close();
-        }, 500); 
+        // Сразу закрываем Mini App.
+        tg.close(); 
         
         e.preventDefault(); 
     };
