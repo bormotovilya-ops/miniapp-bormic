@@ -3,8 +3,8 @@ tg.ready();
 tg.expand();
 
 // 🚨 URL вашего Стандартного входящего webhook Leadteh (тот, что на 200 Ok)
-//const WEBHOOK_BASE_URL = 'https://rb229169.leadteh.ru/inner_webhook/22515d19-26f2-4eee-9a09-a5bfe9d4ffc9'; 
-const WEBHOOK_BASE_URL = 'https://rb229169.leadteh.ru/inner_webhook/js/19846c85-8252-419d-942c-7e4dc8151977'; 
+const WEBHOOK_BASE_URL = 'https://rb229169.leadteh.ru/inner_webhook/22515d19-26f2-4eee-9a09-a5bfe9d4ffc9'; 
+//const WEBHOOK_BASE_URL = 'https://rb229169.leadteh.ru/inner_webhook/js/19846c85-8252-419d-942c-7e4dc8151977'; 
 
 
 tg.MainButton.setText('Закрыть Mini App').show();
