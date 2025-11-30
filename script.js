@@ -31,7 +31,7 @@ setGreeting();
 // 🎬 Обработка кнопок (Остается прежней)
 // ---------------------------------------------------------
 tg.MainButton.setText('Закрыть Mini App').show();
-//tg.MainButton.onClick(() => tg.close());
+tg.MainButton.onClick(() => tg.close());
 
 document.querySelectorAll('.work-btn').forEach(button => {
     button.onclick = (e) => {
@@ -43,6 +43,6 @@ document.querySelectorAll('.work-btn').forEach(button => {
             tg.openLink(url);
         }
 
-        tg.close();
+      //  tg.close();
     };
 });
