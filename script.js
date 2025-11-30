@@ -13,20 +13,22 @@ tg.MainButton.onClick(() => tg.close());
 
 // Функция для отправки данных через GET-параметры (tg.openLink)
 function sendGetRequest(command) {
-    const userId = tg.initDataUnsafe.user?.id;
+    const userId = window.Telegram.WebApp.initDataUnsafe.user?.id;
 
-    if (!userId) {
-        console.error('User ID not available.');
-        return; 
-    }
+    if (!userId) { return; }
 
-    // Собираем полный URL с параметрами: ?contact_by=...&search=...&command=...
-    const finalUrl = `${WEBHOOK_BASE_URL}?contact_by=telegram_id&search=${userId}&command=${command}`;
+    const WEBHOOK_BASE_URL = 'https://rb229169.leadteh.ru/inner_webhook/22515d19-26f2-4eee-9a09-a5bfe9d4ffc9';
+    
+    // 🔥 НОВЫЙ ФОРМАТ: передаем команду как переменную контакта LeadTeh
+    // Не забудьте закодировать значение, чтобы не было проблем с пробелами/символами.
+    const commandValue = encodeURIComponent(command);
+    
+    // Используем проверенный contact_by=telegram_id
+    const finalUrl = `${WEBHOOK_BASE_URL}?contact_by=telegram_id&search=${userId}&variables[MiniAppCommandFinal]=${commandValue}`;
 
-    // 🔥 ИСПОЛЬЗУЕМ tg.openLink - Это гарантирует отправку запроса.
-    tg.openLink(finalUrl); 
+    // Отправляем GET-запрос (который вызывает JSON)
+    window.Telegram.WebApp.openLink(finalUrl); 
 }
-
 
 // Обработка кнопок в Mini App
 const workButtons = document.querySelectorAll('.work-btn');
