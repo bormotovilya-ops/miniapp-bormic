@@ -7,21 +7,18 @@ const WEBHOOK_BASE_URL = 'https://rb229169.leadteh.ru/inner_webhook/22515d19-26f
 tg.MainButton.setText('Закрыть Mini App').show();
 tg.MainButton.onClick(() => tg.close());
 
-// Тихий запрос через Image Ping
+// Функция отправки команды в Leadteh (тихий запрос)
 function sendCommandToLeadteh(command) {
     const userId = tg.initDataUnsafe?.user?.id;
     if (!userId) return;
 
-    const url = `${WEBHOOK_BASE_URL}?contact_by=telegram_id&search=${userId}&command=${encodeURIComponent(command)}`;
+    const url = `${WEBHOOK_BASE_URL}?contact_by=telegram_id&search=${userId}&command=${command}`;
 
-    // Тихий GET — никого не трогаем, ничего не показываем
-    const img = new Image();
-    img.src = url;
-
-    // Для очистки памяти (опционально)
-    img.onload = img.onerror = () => {
-        img.remove();
-    };
+    // Тихий запрос — лог Leadteh отработает, JSON в MiniApp НЕ всплывет
+    fetch(url, {
+        method: 'GET',
+        mode: 'no-cors'
+    }).catch(() => {});
 }
 
 const workButtons = document.querySelectorAll('.work-btn');
