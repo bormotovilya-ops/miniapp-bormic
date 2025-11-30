@@ -1,30 +1,134 @@
-const tg = window.Telegram.WebApp;
-tg.ready();
-tg.expand();
-
-// Главная кнопка
-tg.MainButton.setText('Закрыть Mini App').show();
-tg.MainButton.onClick(() => tg.close());
-
-// ---------------------------------------------------------
-// 🎬 Обработка кнопки
-// ---------------------------------------------------------
-document.querySelectorAll('.work-btn').forEach(button => {
-    button.onclick = (e) => {
-        e.preventDefault();
-
-        const url = button.getAttribute('data-url');
-        
-        if (url) {
-            console.log("Попытка открыть прямую ссылку:", url);
-            
-            // 🔥 Mini App пытается открыть ссылку на t.me
-            tg.openLink(url);
-        } else {
-            console.error("Атрибут data-url не найден.");
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mini App: Список проектов</title>
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <style>
+        body { font-family: sans-serif; padding: 20px; }
+        .work-item { margin-bottom: 20px; border: 1px solid #ccc; padding: 15px; border-radius: 8px; }
+        .work-image { width: 100%; max-width: 300px; height: auto; border-radius: 5px; margin-bottom: 10px; }
+        .work-btn { 
+            padding: 10px 20px; 
+            cursor: pointer;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            display: block;
+            width: 100%;
+            margin-top: 10px;
         }
+    </style>
+</head>
+<body>
+    <h1>Мои Проекты</h1>
+    
+    <section class="work-item">
+        <img src="images/telepat.jpeg" alt="Телепатия" class="work-image">
+        <h2>Телепатия</h2>
+        <p>Шуточная игра, чтобы познакомиться со мной поближе</p>
+        <button 
+            class="btn work-btn" 
+            data-url="https://telegram.me/VisitCardIlyaBormotov_Bot?start=73d05607-16d0-4c26-bf9c-0078c099af9d">
+            <span>Начать игру</span>
+        </button>
+    </section>
 
-        // Закрываем Mini App
-        tg.close();
-    };
-});
+    <section class="work-item">
+        <img src="images/vizitka.jpeg" alt="Визитка" class="work-image">
+        <h2>Моя Визитка</h2>
+        <button 
+            class="btn work-btn" 
+            data-url="https://telegram.me/VisitCardIlyaBormotov_Bot">
+            <span>Телеграм-бот с моей визиткой</span>
+        </button>
+    </section>
+
+    <section class="work-item">
+        <img src="images/concert.jpeg" alt="Концерт" class="work-image">
+        <h2>Бот записи на концерт</h2>
+        <button 
+            class="btn work-btn" 
+            data-url="https://t.me/kidcodes_music_bot">
+            <span>Бот записи на концерт</span>
+        </button>
+    </section>
+    
+    <section class="work-item">
+        <img src="images/meditasiya.jpeg" alt="Медитация" class="work-image">
+        <h2>Бот по медитациям</h2>
+        <button 
+            class="btn work-btn" 
+            data-url="https://t.me/meditasiya_bot">
+            <span>Бот по медитациям</span>
+        </button>
+    </section>
+
+    <section class="work-item">
+        <img src="images/vocal.jpeg" alt="Вокал" class="work-image">
+        <h2>Вокал</h2>
+        <button 
+            class="btn work-btn" 
+            data-url="https://t.me/VocallessonsLaika_Bot">
+            <span>Бот с уроками вокала</span>
+        </button>
+    </section>
+    
+    <section class="work-item">
+        <img src="images/okrujenie.jpeg" alt="Окружение" class="work-image">
+        <h2>Бот с бонусной программой</h2>
+        <p>В боте реализована бонусная программа для клиентов магазина Окружение</p>
+        <button 
+            class="btn work-btn" 
+            data-url="https://t.me/ok_underwear_bot">
+            <span>Бот с бонусной программой</span>
+        </button>
+    </section>
+            
+    <section class="work-item">
+        <img src="images/yoga.jpeg" alt="Йога" class="work-image">
+        <h2>Йога и Цигун</h2>
+        <p>Здесь сконцентрирован многолетний опыт Вадима (Саттва Ом) по Йоге, Цигун и здоровому образу жизни...</p>
+        <button 
+            class="btn work-btn" 
+            data-url="https://t.me/FDatingPermBot/V_Yoga_Bot">
+            <span>Бот с практиками по Йоге и Цигун</span>
+        </button>
+    </section>
+
+    <section class="work-item">
+        <img src="images/dating.jpeg" alt="Знакомства" class="work-image">
+        <h2>Знакомства</h2>
+        <button 
+            class="btn work-btn" 
+            data-url="https://t.me/FDatingPermBot">
+            <span>Бот по быстрым знакомствам</span>
+        </button>
+    </section>
+
+    <section class="work-item">
+        <img src="images/tko.jpeg" alt="ПРО ТКО" class="work-image">
+        <h2>ПРО ТКО</h2>
+        <button 
+            class="btn work-btn" 
+            data-url="https://t.me/ProTKObot">
+            <span>Бот ПРО ТКО</span>
+        </button>
+    </section>
+
+    <section class="work-item">
+        <img src="images/doshi.jpeg" alt="Доши" class="work-image">
+        <h2>Доши</h2>
+        <p>Сайт с обучающими материалами по Аюрведе...</p>
+        <button 
+            class="btn work-btn" 
+            data-url="https://doshatest.ru/">
+            <span>Сайт с тестом по дошам</span>
+        </button>
+    </section>
+
+    <script src="script.js"></script>
+</body>
+</html>
