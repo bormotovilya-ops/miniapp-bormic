@@ -1,103 +1,34 @@
 <!DOCTYPE html>
-<html>
+<html lang="ru">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Bormic | Мои Работы</title>
-<link rel="stylesheet" href="style.css">
-<script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mini App Тест без Webhook</title>
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <style>
+        body { font-family: sans-serif; padding: 20px; text-align: center; }
+        .work-btn { 
+            padding: 10px 20px; 
+            margin-top: 15px; 
+            cursor: pointer;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+        }
+    </style>
 </head>
 <body>
-<div class="container">
-    <div class="header">
-        <h1>Мои Свежие Работы</h1>
-        <p id="welcomeText">
-            Здесь вы найдете перечень разработанных мною чат-ботов и проектов.
-        </p>
-    </div>
-
-    <section class="work-item">
-        <img src="images/vizitka.jpeg" alt="Визитка" class="work-image">
-        <button class="btn work-btn" data-command="MiniApp_vizitka_view" data-url="https://t.me/VisitCardIlyaBormotov_Bot">
-            <span>Телеграм-бот с моей визиткой</span>
-        </button>
-    </section>
-
-    <section class="work-item">
-        <img src="images/concert.jpeg" alt="Концерт" class="work-image">
-        <button class="btn work-btn" data-command="MiniApp_concert_view" data-url="https://t.me/kidcodes_music_bot">
-            <span>Бот записи на концерт</span>
-        </button>
-    </section>
+    <h1>Тест Прямой Ссылки на Сценарий</h1>
     
     <section class="work-item">
-        <img src="images/meditasiya.jpeg" alt="Медитации" class="work-image">
-        <button class="btn work-btn" data-command="MiniApp_meditasiya_view" data-url="https://t.me/meditasiya_bot">
-            <span>Бот по медитациям</span>
+        <button 
+            class="btn work-btn" 
+            data-url="https://telegram.me/VisitCardIlyaBormotov_Bot?start=255aae50-7b71-4b5c-bfc0-2f863f3360d7">
+            <span>Запустить Сценарий (Прямая Ссылка)</span>
         </button>
     </section>
 
-    <section class="work-item">
-        <img src="images/vocal.jpeg" alt="Вокал" class="work-image">
-        <button class="btn work-btn" data-command="MiniApp_vocal_view" data-url="https://t.me/VocallessonsLaika_Bot">
-            <span>Бот с уроками вокала</span>
-        </button>
-    </section>
-    
-    <div class="description-block">
-        <p>В боте реализована бонусная программа для клиентов магазина Окружение</p>
-    </div>
-    <section class="work-item">
-        <img src="images/bonus.jpeg" alt="Бонусы" class="work-image">
-        <button class="btn work-btn disabled" data-command="MiniApp_bonus_view" data-url=""> 
-            <span>Бот с бонусной программой</span>
-        </button>
-    </section>
-
-    <div class="description-block">
-        </div>
-    <section class="work-item">
-        <img src="images/yoga.jpeg" alt="Йога" class="work-image">
-        <button class="btn work-btn" data-command="MiniApp_yoga_view" data-url="https://app.leadteh.ru/w/dp8VK">
-            <span>Бот с практиками по Йоге и Цигун</span>
-        </button>
-    </section>
-
-    <section class="work-item">
-        <img src="images/znakomstva.jpeg" alt="Знакомства" class="work-image">
-        <button class="btn work-btn disabled" data-command="MiniApp_znakomstva_view" data-url=""> 
-            <span>Бот по быстрым знакомствам</span>
-        </button>
-    </section>
-    
-    <section class="work-item">
-        <img src="images/tko.jpeg" alt="ТКО" class="work-image">
-        <button class="btn work-btn" data-command="MiniApp_tko_view" data-url="https://t.me/ProTKObot">
-            <span>Бот ПРО ТКО</span>
-        </button>
-    </section>
-
-    <section class="work-item">
-        <img src="images/cosmetolog.jpeg" alt="Косметолог" class="work-image">
-        <button class="btn work-btn" data-command="MiniApp_cosmetolog_view" data-url="https://app.leadteh.ru/w/dg29O">
-            <span>Бот для кабинета косметолога</span>
-        </button>
-    </section>
-
-    <div class="description-block">
-        </div>
-    <section class="work-item">
-        <img src="images/dosha_test.jpeg" alt="Доша-тест" class="work-image">
-        <button class="btn work-btn" data-command="MiniApp_dosha_view" data-url="https://doshatest.ru/">
-            <span>Сайт с тестом по дошам</span>
-        </button>
-    </section>
-
-    <div class="footer">
-        <p>Сделано с душой</p>
-        <a id="telegramLink" href="tg://resolve?domain=IlyaBorm" target="_blank">Мой Telegram: @IlyaBorm</a>
-    </div>
-</div>
-<script src="script.js"></script>
+    <script src="script.js"></script>
 </body>
 </html>
