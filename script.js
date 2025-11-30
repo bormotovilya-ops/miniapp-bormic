@@ -7,28 +7,22 @@ const WEBHOOK_BASE_URL = 'https://rb229169.leadteh.ru/inner_webhook/22515d19-26f
 tg.MainButton.setText('Закрыть Mini App').show();
 tg.MainButton.onClick(() => tg.close());
 
-
-// Функция отправки команды в Leadteh (с сохранением в переменную)
+// Функция отправки команды в Leadteh
 function sendCommandToLeadteh(command) {
     const userId = tg.initDataUnsafe?.user?.id;
     if (!userId) return;
 
-    // Сохраняем команду сразу в переменную контакта:
-    // variables[MiniAppCommandFinal] = <command>
-    const url =
-        `${WEBHOOK_BASE_URL}?contact_by=telegram_id&search=${userId}` +
-        `&variables[MiniAppCommandFinal]=${encodeURIComponent(command)}`;
+    const url = `${WEBHOOK_BASE_URL}?contact_by=telegram_id&search=${userId}&command=${command}`;
 
-    // Открываем скрытое мини-окно, чтобы не показывать JSON
-    const w = window.open(url, "_blank", "width=1,height=1,opacity=0");
+    // Открываем ссылку в маленьком скрытом окне
+    const w = window.open(url, "_blank", "width=100,height=100,opacity=0");
 
+    // Закрываем окно через 300 мс — пользователь не увидит
     setTimeout(() => {
-        try { w?.close(); } catch {}
+        if (w) w.close();
     }, 300);
 }
 
-
-// Обработка кнопок
 const workButtons = document.querySelectorAll('.work-btn');
 
 workButtons.forEach(button => {
