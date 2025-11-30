@@ -2,13 +2,37 @@ const tg = window.Telegram.WebApp;
 tg.ready();
 tg.expand();
 
-// Главная кнопка
+// ---------------------------------------------------------
+// 🔥 НОВАЯ ФУНКЦИЯ: Приветствие пользователя
+// ---------------------------------------------------------
+function setGreeting() {
+    const userData = tg.initDataUnsafe.user;
+    const greetingElement = document.getElementById('user-greeting');
+    
+    if (userData && greetingElement) {
+        let name = userData.first_name || 'Гость';
+        
+        // Добавляем фамилию, если есть
+        if (userData.last_name) {
+            name += ' ' + userData.last_name;
+        }
+        
+        greetingElement.innerText = `Привет, ${name}!`;
+    } else if (greetingElement) {
+        // Если данные пользователя недоступны (редко)
+        greetingElement.innerText = `Привет!`;
+    }
+}
+
+// Запускаем приветствие сразу после готовности Mini App
+setGreeting();
+
+// ---------------------------------------------------------
+// 🎬 Обработка кнопок (Остается прежней)
+// ---------------------------------------------------------
 tg.MainButton.setText('Закрыть Mini App').show();
 tg.MainButton.onClick(() => tg.close());
 
-// ---------------------------------------------------------
-// 🎬 Обработка всех кнопок
-// ---------------------------------------------------------
 document.querySelectorAll('.work-btn').forEach(button => {
     button.onclick = (e) => {
         e.preventDefault();
@@ -16,11 +40,9 @@ document.querySelectorAll('.work-btn').forEach(button => {
         const url = button.getAttribute('data-url');
         
         if (url) {
-            // Используем прямой запуск сценария через tg.openLink(), как мы успешно протестировали
             tg.openLink(url);
         }
 
-        // Закрываем Mini App сразу
         tg.close();
     };
 });
